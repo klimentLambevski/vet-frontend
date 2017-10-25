@@ -1,0 +1,39 @@
+$brandColor : #336E7B;
+
+#main-header{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  box-shadow: 2px 0 1px 0 rgba(145, 145, 145, 0.5);
+  color:white;
+
+  .logo-container{
+    display: flex;
+    align-items: center;
+    padding: 0 30px;
+
+
+  }
+
+  .navigation{
+    flex:1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    a{
+      padding: 15px 25px;
+      text-transform: capitalize;
+      cursor: pointer;
+      font-size: 1.2em;
+      color:white;
+      text-decoration: none;
+      transition: 0.5s all ease;
+
+       &.router-link-active{
+        background-color: darken($brandColor, 5);
+        color:white;
+      }
+    }
+  }
+}
