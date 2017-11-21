@@ -4,3 +4,7 @@ root = true
 [src/**/*.js]
 indent_style = space
 indent_size = 2
+
+[src/**/*.vue]
+indent_style = space
+indent_size = 2

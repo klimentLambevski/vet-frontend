@@ -195,6 +195,7 @@
             pagination: {
                 sortBy: 'name'
             },
+            valid: false
         })
     }
 </script>
