@@ -194,6 +194,7 @@
             pagination: {
                 sortBy: 'name'
             },
+            valid: false
         }),
         methods: {
             onSubmit(){

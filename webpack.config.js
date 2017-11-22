@@ -67,7 +67,13 @@ module.exports = {
         contentBase: path.join(__dirname, "dist"),
         host: 'localhost',
         port: 9000,
-        open: true
+        open: true,
+        proxy: {
+            '/auth': {
+                target: "http://vet.3khub.com",
+                changeOrigin: true
+            }
+        }
     },
     devtool: 'cheap-source-map',
 
