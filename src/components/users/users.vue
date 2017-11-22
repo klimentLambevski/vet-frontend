@@ -13,35 +13,15 @@
 
         <v-dialog v-model="showModal" max-width="500px">
             <v-card>
-
-                <v-card-title>
-                    <v-card-title class="headline cyan--text text--darken-3">Креирај нов корисник</v-card-title>
-                    <v-spacer></v-spacer>
-                </v-card-title>
-
                 <v-card-text>
-                    <v-form v-model="valid">
-                        <v-text-field
-                                label="Корисник"
-                                v-model="user.name"
-                                :rules="nameRules"
-                                :counter="10"
-                                required
-                        ></v-text-field>
-                        <v-text-field
-                                label="Е-маил"
-                                v-model="user.email"
-                                :rules="emailRules"
-                                required
-                        ></v-text-field>
-                    </v-form>
+                    <dynamic-form
+                            :on-submit="onSubmit"
+                            :config="createFormConfig"
+                            @cancel="onCancel"
+                            @form-submitted="onFormSubmitted"
+
+                    ></dynamic-form>
                 </v-card-text>
-
-                <v-card-actions>
-                    <v-btn color="cyan darken-3" flat @click.stop="showModal=false">Close</v-btn>
-                    <v-btn color="cyan darken-3 save-btn"  @click.stop="showModal=false">Save</v-btn>
-                </v-card-actions>
-
             </v-card>
         </v-dialog>
 
@@ -51,21 +31,39 @@
 <script>
 
     import Grid from '../grid/grid.vue';
+    import DynamicForm from '../dynamic-form/dynamic-form.vue';
 
     export default {
 
-        components: {Grid},
+        components: {
+            Grid,
+            DynamicForm
+        },
         data: () => ({
             showModal: false,
-
-            nameRules: [
-                (v) => !!v || 'Името е задолжително',
-            ],
+            createFormConfig: {
+                formName: 'Креирај нов корисник',
+                columns: {
+                    'username': {
+                        name: 'username',
+                        type: 'checkbox',
+                        label: 'Korisnichko ime',
+                        rules: [
+                            (v) => !!v || 'Името е задолжително',
+                        ]
+                    },
+                    'email': {
+                        name: 'email',
+                        type: 'text',
+                        label: 'Email',
+                        rules: [
+                            (v) => !!v || 'Е-маилот е задолжителен',
+                            (v) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'Е-маилот мора да е валиден'
+                        ]
+                    },
+                }
+            },
             user: {},
-            emailRules: [
-                (v) => !!v || 'Е-маилот е задолжителен',
-                (v) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'Е-маилот мора да е валиден'
-            ],
             headers: [
                 {
                     text: 'Dessert (100g serving)',
@@ -196,7 +194,21 @@
                 sortBy: 'name'
             },
             valid: false
-        })
+        }),
+        methods: {
+            onSubmit(){
+                console.log("ON SUBMIT");
+            },
+            validate(){
+
+            },
+            onCancel(){
+                console.log("On cancel");
+            },
+            onFormSubmitted(){
+                console.log("onFormSubmitted");
+            }
+        }
     }
 </script>
 
