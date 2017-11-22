@@ -19,19 +19,25 @@ export function graphql([query]) {
       query: query,
       variables: variables
     };
-    return axios('/graphql', {
-      method: 'POST',
-      body: JSON.stringify(body),
+    return axios.post('/graphql', body, {
       headers: {
-        'Content-Type': 'application/json',
         Authorization: globalState.token
       }
     })
+      .then(res => res.data)
+      .catch(err => {
+        if(err.response.data.errors) {
+          return Promise.reject(err.response.data.errors);
+        } else {
+          return Promise.resolve(err.response.data.data);
+        }
+      })
       .then(res => {
+        console.log(res);
         if(res.errors) {
           return Promise.reject(res.errors);
         } else {
-          return Promise.resolve(res);
+          return Promise.resolve(res.data);
         }
       })
   }

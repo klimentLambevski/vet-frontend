@@ -72,6 +72,10 @@ module.exports = {
             '/auth': {
                 target: "http://vet.3khub.com",
                 changeOrigin: true
+            },
+            '/graphql': {
+                target: "http://vet.3khub.com",
+                changeOrigin: true
             }
         }
     },
