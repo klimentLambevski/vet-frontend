@@ -94,6 +94,7 @@
             config: {},
             onSubmit: {},
             validate: {},
+
         },
         methods: {
             close() {

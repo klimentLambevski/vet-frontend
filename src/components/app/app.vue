@@ -12,6 +12,8 @@
 
 <script>
 
+  import {mapState} from 'vuex';
+
   import store from '../../store/store';
 
   import MainHeader from '../main-header/main-header.vue';
@@ -35,6 +37,11 @@
         }, 1000);
       }
     },
+    computed: {
+      ...mapState({
+        self: state => state.self.user
+      })
+    },
     created() {
       initToken();
 
@@ -44,7 +51,7 @@
             this.clearLoading();
           })
           .catch(() => {
-            this.$store.dispatch('signOut').then();
+            this.$store.dispatch('signOut');
             this.$router.push({name: 'login'});
 
             this.clearLoading();
@@ -54,7 +61,7 @@
 
         this.$router.push({name: 'login'});
 
-//        signIn({email: 'jane@vet.com', password: 'jane'}).then(res => this.$store.commit('setSelf', res.user));
+        signIn({email: 'jane@vet.com', password: 'jane'}).then(res => this.$store.commit('setSelf', res.user));
       }
     }
 

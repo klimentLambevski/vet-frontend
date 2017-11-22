@@ -41,7 +41,6 @@
         },
         data: () => ({
             showModal: false,
-
             createFormConfig: {
                 formName: 'Креирај нов корисник',
                 columns: {
