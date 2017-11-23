@@ -1,33 +1,62 @@
 <template>
-    <div id="login">
-        <!--<v-form v-model="valid">-->
-            <!--<v-text-field-->
-                    <!--label="Name"-->
-                    <!--v-model="name"-->
-                    <!--:rules="nameRules"-->
-                    <!--:counter="10"-->
-                    <!--required-->
-            <!--&gt;</v-text-field>-->
-            <!--<v-text-field-->
-                    <!--label="E-mail"-->
-                    <!--v-model="email"-->
-                    <!--:rules="emailRules"-->
-                    <!--required-->
-            <!--&gt;</v-text-field>-->
-            <!--<v-btn color="primary"-->
-                   <!--@click="submit"-->
-                   <!--:disabled="!valid"-->
-            <!--&gt;-->
-                <!--submit-->
-            <!--</v-btn>-->
-        <!--</v-form>-->
-    LOGIIN
+    <div class="login">
+
+      <div class="login-form">
+        <dynamic-form :config="loginFormConfig"
+                      :on-submit="login"
+                      @form-submitted="onFormSubmitted"
+        ></dynamic-form>
+      </div>
 
     </div>
 </template>
 
 <script>
-    export default {}
+
+    import DynamicForm from '../dynamic-form/dynamic-form.vue';
+    import {initToken, signIn} from "../../services/auth";
+
+    export default {
+
+      components: {
+        DynamicForm,
+      },
+      data: () => ({
+        loginFormConfig: {
+          columns: {
+            'email': {
+              name: 'email',
+              type: 'text',
+              label: 'Email',
+              rules: [
+                (v) => !!v || 'Е-маилот е задолжителен',
+                (v) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'Е-маилот мора да е валиден'
+              ]
+            },
+            'password': {
+              name: 'password',
+              type: 'text',
+              label: 'Password',
+              rules: [
+                (v) => !!v || 'Лозинката е задолжителна',
+              ]
+            },
+          },
+          confirmButtonName: "Логирај се",
+        },
+        loginData: {}
+      }),
+      methods: {
+        login(loginData){
+          return signIn(loginData);
+        },
+        onFormSubmitted( { serverValues } ){
+          this.$store.commit('setSelf', serverValues.user);
+          this.$router.push({name: 'users'});
+        }
+      }
+
+    }
 </script>
 
 <style lang="scss">

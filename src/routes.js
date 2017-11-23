@@ -1,4 +1,5 @@
 import VueRouter from 'vue-router';
+import App from './components/app/app.vue';
 import Login from './components/login/login.vue';
 import Users from './components/users/users.vue';
 import GraphQl from './components/graphql/graphql.vue';
@@ -6,12 +7,13 @@ import GraphQl from './components/graphql/graphql.vue';
 
 const routes = [
   {
-    path: '/login',
-    name: 'login',
-    component: Login,
+    path: '/',
+    name: 'app',
+    component: App,
   },
   {
     path: '/users',
+    name: 'users',
     component: Users,
   },
   {

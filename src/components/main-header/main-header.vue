@@ -10,15 +10,28 @@
             <router-link to="/users">Корисници</router-link>
             <router-link to="/pacients">Типови пациенти</router-link>
             <router-link to="/notifications">Нотификации</router-link>
-            <router-link to="/login">Најава</router-link>
+            <a @click="logOut">Одјава</a>
         </div>
 
     </div>
 </template>
 
 <script>
-    export default {
 
+  import store from '../../store/store';
+
+
+    export default {
+      store,
+      created(){
+        console.log(this.self);
+      },
+      methods: {
+        logOut(){
+          this.$store.dispatch('signOut');
+          this.$router.push({name: 'app'});
+        }
+      }
     }
 </script>
 

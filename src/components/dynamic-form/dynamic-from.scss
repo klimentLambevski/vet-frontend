@@ -2,6 +2,15 @@
 
   .form-actions{
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
+
+    .save-btn{
+      color:white;
+    }
+
+  }
+
+   .input-group__details:before {
+    background-color: rgba(0,0,0,0.12) !important;
   }
 }

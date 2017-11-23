@@ -1,0 +1,10 @@
+@import "vars";
+
+  .btn{
+    &.brand-btn{
+      background-color: $bgBrand !important;
+      border-color: $bgBrand !important;
+      color:white;
+    }
+  }
+

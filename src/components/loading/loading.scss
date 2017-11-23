@@ -1,3 +1,4 @@
+@import "../../styles/vars";
 
 .loading {
   position: absolute;
@@ -5,7 +6,7 @@
   right: 0;
   bottom: 0;
   left: 0;
-  background: #00838f;
+  background:$bgBrand;
   display: flex;
   align-items: center;
   justify-content: center;

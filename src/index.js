@@ -8,7 +8,9 @@ require('vuetify/dist/vuetify.css');
 
 import {router} from "./routes.js";
 
+
 Vue.use(Vuetify);
+
 Vue.use(VueRouter);
 
 new Vue({
@@ -16,6 +18,10 @@ new Vue({
   components: {
     App
   },
-  template: '<app></app>'
+  template: '<v-app light><app></app></v-app>',
+  created(){
+
+  }
+
 
 }).$mount('#r-boot');
