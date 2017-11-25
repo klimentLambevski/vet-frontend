@@ -1,8 +1,15 @@
-@import '../../styles/buttons.scss';
+//@import '../../styles/buttons.scss';
+@import '../../styles/vars.scss';
 
 #app{
 
   .content{
     padding: 15px 30px;
+  }
+  .primary--text {
+    color: $bgBrand !important;
+  }
+  .primary {
+    background-color: $bgBrand !important;
   }
 }

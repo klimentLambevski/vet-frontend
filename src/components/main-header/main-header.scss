@@ -1,4 +1,4 @@
-$brandColor : #336E7B;
+@import '../../styles/vars';
 
 #main-header{
   display: flex;
@@ -31,7 +31,7 @@ $brandColor : #336E7B;
       transition: 0.5s all ease;
 
        &.router-link-active{
-        background-color: darken($brandColor, 5);
+        background-color: darken($bgBrand, 5);
         color:white;
       }
     }

@@ -67,7 +67,7 @@
     <div class="form-actions">
       <v-btn @click="close" v-if="formConfig.showCancelButton"> {{ formConfig.cancelButtonName }}</v-btn>
 
-      <v-btn class="brand-btn" @click="submit">
+      <v-btn class="brand-btn" @click="submit" color="primary">
         {{ formConfig.confirmButtonName }}
       </v-btn>
     </div>

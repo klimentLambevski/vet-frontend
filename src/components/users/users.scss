@@ -1,4 +1,4 @@
-$brandColor: #336E7B;
+@import "../../styles/vars";
 #users {
 
   display: flex;
@@ -9,7 +9,7 @@ $brandColor: #336E7B;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    color: $brandColor;
+    color: $bgBrand;
     font-weight: bold;
     font-size: 20px;
 

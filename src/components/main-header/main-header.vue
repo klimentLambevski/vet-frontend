@@ -1,9 +1,7 @@
 <template>
-  <div id="main-header" class="cyan darken-3">
+  <div id="main-header" class="primary">
     <div class="logo-container">
-
       <div class="title">Vet</div>
-
     </div>
 
     <div class="navigation">

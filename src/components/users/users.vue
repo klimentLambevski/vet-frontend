@@ -3,7 +3,7 @@
 
     <div class="section-title">
       <span>Корисници</span>
-      <v-btn flat fab color="cyan darken-3" class="create-btn" @click.stop="showModal = !showModal">
+      <v-btn flat fab color="primary" class="create-btn" @click.stop="showModal = !showModal">
         <v-icon>add_box</v-icon>
       </v-btn>
 
