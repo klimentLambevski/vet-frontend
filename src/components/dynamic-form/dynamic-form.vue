@@ -80,7 +80,7 @@
   export default {
     data: () => ({
       formValues: {
-        date: null
+
       },
       formConfig: {},
       validationMessages: [],
