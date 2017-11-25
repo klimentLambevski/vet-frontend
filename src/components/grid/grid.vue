@@ -1,15 +1,24 @@
 <template>
 
   <div class="grid">
-
+    <v-card-title>
+      <v-spacer></v-spacer>
+      <v-text-field
+        append-icon="search"
+        label="Search"
+        single-line
+        hide-details
+        v-model="search"
+      ></v-text-field>
+    </v-card-title>
     <v-data-table
       v-model="selected"
-      v-bind:headers="config.headers"
-      v-bind:items="items"
       select-all
-      v-bind:pagination.sync="pagination"
       item-key="name"
       class="elevation-1"
+      :headers="config.headers"
+      :items="gridData"
+      :pagination.sync="pagination"
     >
 
       <template slot="headers" slot-scope="props">
@@ -25,8 +34,8 @@
         </tr>
       </template>
       <template slot="items" slot-scope="props">
-        <tr  @click="props.selected = !props.selected">
-          <td v-for="header in config.headers"> {{ getItem(props.item, header.value)  }}</td>
+        <tr @click="props.selected = !props.selected">
+          <td v-for="header in config.headers"> {{ getItem(props.item, header.value) }}</td>
           <td>
             <v-menu bottom left>
               <v-btn icon slot="activator">
@@ -60,12 +69,38 @@
     data() {
       return {
         selected: [],
-        pagination: Object
+        pagination: Object,
+        search: null
       }
     },
     props: {
       config: Object,
       items: Array,
+    },
+    computed: {
+      gridData() {
+        if (this.search) {
+          let startWithArr = [];
+          let containsArr = [];
+          _.each(this.items, (item) => {
+            let startsWith = false;
+            let contains = false;
+            _.each(this.config.headers, (header) => {
+              let val = _.get(item, header.value);
+              startsWith = val && val.startsWith(this.search);
+              contains = val && val.includes(this.search);
+            });
+            if(startsWith) {
+              startWithArr.push(item);
+            } else if(contains) {
+              containsArr.push(item);
+            }
+          });
+          return startWithArr.concat(containsArr);
+        } else {
+          return this.items;
+        }
+      }
     },
     methods: {
       changeSort(column) {
@@ -76,7 +111,7 @@
           this.pagination.descending = false
         }
       },
-      getItem(item, headerValue){
+      getItem(item, headerValue) {
         return _.get(item, headerValue);
       },
       openModal(item, action){
@@ -84,7 +119,9 @@
       }
     },
     created() {
-      this.pagination = this.config.pagination;
+      this.pagination = _.defaults({
+        rowsPerPage: 25
+      }, this.config.pagination);
     }
   }
 </script>
