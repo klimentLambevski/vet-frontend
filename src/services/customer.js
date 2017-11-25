@@ -1,5 +1,6 @@
 
-import {graphql} from "./gateway";
+import {graphql, handleMutation} from "./gateway";
+import * as _ from "lodash";
 
 export const getCustomers = () => graphql`
   query getCustomers{
@@ -48,3 +49,41 @@ export const getCustomer = (customerId) => graphql`
       }
     }
   }`({id: customerId});
+
+export const createCustomer = (customer) => handleMutation(graphql`
+  mutation addCustomer($user: UserInput!){
+    createCustomer(customer: {user: $user}) {
+      errors {
+        message
+      }
+      customer {
+        id
+        user {
+          id
+          email
+          name
+          surname
+        }
+      }
+    }
+  }
+`({user: customer.user}), 'createCustomer');
+
+export const updateCustomer = (customer, customerId) => handleMutation(graphql`
+  mutation updateCustomer($user: UserInput!, $customerId: String!){
+    updateCustomer(customer: {user: $user}, customerId: $customerId) {
+      errors {
+        message
+      }
+      customer {
+        id
+        user {
+          id
+          email
+          name
+          surname
+        }
+      }
+    }
+  }
+`({user: _.pick(customer.user, ['email', 'name', 'surname']), customerId: customerId}), 'updateCustomer');
