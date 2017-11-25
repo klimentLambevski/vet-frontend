@@ -9,7 +9,7 @@
 
     </div>
 
-    <grid :config="tableConfig" :items="customers" ></grid>
+    <grid :config="tableConfig" :items="customers"></grid>
 
     <v-dialog v-model="showModal" max-width="500px">
       <v-card>
@@ -32,7 +32,7 @@
 
   import Grid from '../grid/grid.vue';
   import DynamicForm from '../dynamic-form/dynamic-form.vue';
-  import {getCustomers} from "../../services/customer";
+  import {createCustomer, getCustomers} from "../../services/customer";
 
   export default {
 
@@ -45,24 +45,30 @@
       createFormConfig: {
         formName: 'Креирај нов корисник',
         columns: {
-          'username': {
-            name: 'username',
-            type: 'checkbox',
-            label: 'Korisnichko ime',
+          'name': {
+            type: 'text',
+            label: 'Име',
             rules: [
               (v) => !!v || 'Името е задолжително',
             ]
           },
-          'email': {
-            name: 'email',
+          'surname': {
             type: 'text',
-            label: 'Email',
+            label: 'Презиме',
+            rules: [
+              (v) => !!v || 'Презимето е задолжително',
+            ]
+          },
+          'email': {
+            type: 'text',
+            label: 'Е-маил',
             rules: [
               (v) => !!v || 'Е-маилот е задолжителен',
               (v) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'Е-маилот мора да е валиден'
             ]
           },
-        }
+        },
+        confirmButtonName: 'Креирај'
       },
       tableConfig: {
         headers: [
@@ -78,8 +84,8 @@
       valid: false
     }),
     methods: {
-      onSubmit() {
-        console.log("ON SUBMIT");
+      onSubmit(data) {
+       return createCustomer({user: data});
       },
       validate() {
 
@@ -87,8 +93,9 @@
       onCancel() {
         console.log("On cancel");
       },
-      onFormSubmitted() {
-        console.log("onFormSubmitted");
+      onFormSubmitted({serverValues: {customer}}) {
+        this.customers.push(customer);
+        this.showModal = false;
       }
     },
     created() {
