@@ -3,12 +3,13 @@
     <loading v-if="isLoading"></loading>
     <div id="app">
 
-      <login v-if="!this.self"
-              @user-logged-in=""></login>
+      <login v-if="!this.self"></login>
 
       <div class="view-content" v-else>
         <main-header></main-header>
-        <router-view></router-view>
+        <div class="content">
+          <router-view></router-view>
+        </div>
       </div>
 
     </div>
@@ -60,7 +61,6 @@
           .then(() => {
             this.clearLoading();
             this.$router.push({name: 'users'});
-          //  getCustomers('7ca552c4-ad16-4c39-8885-97dbd0f306d8').then(res => console.log(res));
           })
           .catch(() => {
             this.$store.dispatch('signOut');

@@ -24,7 +24,7 @@
     export default {
       store,
       created(){
-        console.log(this.self);
+
       },
       methods: {
         logOut(){

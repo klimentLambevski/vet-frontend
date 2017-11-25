@@ -71,15 +71,10 @@
         {{ formConfig.confirmButtonName }}
       </v-btn>
     </div>
-
-
   </v-form>
-
 </template>
 
-
 <script>
-
   import * as _ from 'lodash';
 
   export default {
