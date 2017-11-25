@@ -34,10 +34,10 @@
               </v-btn>
               <v-list>
                 <v-list-tile>
-                  <v-list-tile-title>Измени</v-list-tile-title>
+                  <v-list-tile-title><span @click="openModal(props.item, 'edit')">Измени</span></v-list-tile-title>
                 </v-list-tile>
                 <v-list-tile>
-                  <v-list-tile-title>Избриши</v-list-tile-title>
+                  <v-list-tile-title><span @click="openModal(props.item, 'delete')">Избриши</span></v-list-tile-title>
                 </v-list-tile>
               </v-list>
             </v-menu>
@@ -78,6 +78,9 @@
       },
       getItem(item, headerValue){
         return _.get(item, headerValue);
+      },
+      openModal(item, action){
+        this.$emit('open-modal', {item, action});
       }
     },
     created() {
