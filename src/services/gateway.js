@@ -5,7 +5,7 @@ import {globalState} from "../store/global";
 
 export function handleMutation(request, mutationName) {
   return request.then(response => {
-    let data = response.data[mutationName];
+    let data = response[mutationName];
     if(data.errors) {
       return Promise.reject(data.errors);
     }
@@ -33,7 +33,6 @@ export function graphql([query]) {
         }
       })
       .then(res => {
-        console.log(res);
         if(res.errors) {
           return Promise.reject(res.errors);
         } else {
