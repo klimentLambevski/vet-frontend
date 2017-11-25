@@ -2,6 +2,13 @@
 
   <div class="grid">
     <v-card-title>
+
+      <div class="section-title">
+        <span>Корисници</span>
+        <v-btn flat fab color="primary" class="create-btn" @click.stop="openModal(null, 'create')">
+          <v-icon>add_box</v-icon>
+        </v-btn>
+      </div>
       <v-spacer></v-spacer>
       <v-text-field
         append-icon="search"
@@ -11,6 +18,7 @@
         v-model="search"
       ></v-text-field>
     </v-card-title>
+
     <v-data-table
       v-model="selected"
       select-all
@@ -20,13 +28,11 @@
       :items="gridData"
       :pagination.sync="pagination"
     >
-
       <template slot="headers" slot-scope="props">
         <tr>
           <th v-for="header in props.headers" :key="header.text"
               :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
-              @click="changeSort(header.value)"
-          >
+              @click="changeSort(header.value)">
             <v-icon class="cyan--text text--darken-3">arrow_upward</v-icon>
             {{ header.text }}
           </th>
@@ -34,19 +40,18 @@
         </tr>
       </template>
       <template slot="items" slot-scope="props">
-        <tr @click="props.selected = !props.selected">
+        <tr @click="rowSelected($event, props.item)">
           <td v-for="header in config.headers"> {{ getItem(props.item, header.value) }}</td>
-          <td>
+          <td @click="$event.stopPropagation();">
             <v-menu bottom left>
-              <v-btn icon slot="activator">
+              <v-btn icon slot="activator" >
                 <v-icon>more_horiz</v-icon>
               </v-btn>
               <v-list>
-                <v-list-tile>
-                  <v-list-tile-title><span @click="openModal(props.item, 'edit')">Измени</span></v-list-tile-title>
-                </v-list-tile>
-                <v-list-tile>
-                  <v-list-tile-title><span @click="openModal(props.item, 'delete')">Избриши</span></v-list-tile-title>
+                <v-list-tile v-for="action, key in config.actions">
+                  <v-list-tile-title>
+                    <a @click="openModal(props.item, key)">{{ action.label }}</a>
+                  </v-list-tile-title>
                 </v-list-tile>
               </v-list>
             </v-menu>
@@ -90,9 +95,9 @@
               startsWith = val && val.startsWith(this.search);
               contains = val && val.includes(this.search);
             });
-            if(startsWith) {
+            if (startsWith) {
               startWithArr.push(item);
-            } else if(contains) {
+            } else if (contains) {
               containsArr.push(item);
             }
           });
@@ -114,8 +119,11 @@
       getItem(item, headerValue) {
         return _.get(item, headerValue);
       },
-      openModal(item, action){
+      openModal(item, action) {
         this.$emit('open-modal', {item, action});
+      },
+      rowSelected(item){
+        this.$emit('row-selected', item);
       }
     },
     created() {

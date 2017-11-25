@@ -1,16 +1,10 @@
 <template>
   <div id="users">
-    
-    <div class="section-title">
-      <span>Корисници</span>
-      <v-btn flat fab color="primary" class="create-btn" @click.stop="showModal = !showModal">
-        <v-icon>add_box</v-icon>
-      </v-btn>
-    </div>
 
-    <grid :config="tableConfig"
+    <grid :config="customerTableConfig"
           :items="customers"
           @open-modal="openModal"
+          @row-selected="onRowSelected"
     ></grid>
 
     <v-dialog v-if="showModal" v-model="showModal" max-width="500px">
@@ -27,13 +21,13 @@
     </v-dialog>
 
   </div>
-
 </template>
 
 <script>
   import Grid from '../grid/grid.vue';
   import DynamicForm from '../dynamic-form/dynamic-form.vue';
   import {createCustomer, getCustomers, updateCustomer} from "../../services/customer";
+  import {getCustomerFormConfig, getCustomerGridConfig} from "../../services/ui/customer";
 
   export default {
     components: {
@@ -44,46 +38,9 @@
       showModal: false,
       valid: false,
       customer: {user: {}},
-      customerFormConfig: {
-        formName: 'Креирај нов корисник',
-        columns: {
-          'name': {
-            type: 'text',
-            label: 'Име',
-            rules: [
-              (v) => !!v || 'Името е задолжително',
-            ]
-          },
-          'surname': {
-            type: 'text',
-            label: 'Презиме',
-            rules: [
-              (v) => !!v || 'Презимето е задолжително',
-            ]
-          },
-          'email': {
-            type: 'text',
-            label: 'Е-маил',
-            rules: [
-              (v) => !!v || 'Е-маилот е задолжителен',
-              (v) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'Е-маилот мора да е валиден'
-            ]
-          },
-        },
-        confirmButtonName: 'Креирај'
-      },
-      tableConfig: {
-        headers: [
-          {text: 'Email', value: 'user.email'},
-          {text: 'Name', value: 'user.name'},
-          {text: 'Surname', value: 'user.surname'},
-        ],
-        pagination: {
-          sortBy: 'name'
-        },
-      },
       customers: [],
-
+      customerFormConfig: {},
+      customerTableConfig: {},
     }),
     methods: {
       onSubmit(user) {
@@ -104,8 +61,13 @@
         this.showModal = false;
       },
       openModal({item, action}) {
-        this.customer = item;
+        if (item != null) {
+          this.customer = item;
+        }
         switch (action) {
+          case 'create':
+            this.showModal = true;
+            break;
           case 'edit':
             this.showModal = true;
             break;
@@ -115,9 +77,14 @@
           default:
             console.log("Invalid command");
         }
+      },
+      onRowSelected(item){
+        this.$router.push({name: 'customer', params: { id: item.id }});
       }
     },
     created() {
+      this.customerFormConfig = getCustomerFormConfig;
+      this.customerTableConfig = getCustomerGridConfig;
       getCustomers().then(response => {
         this.customers = response.customers;
       })

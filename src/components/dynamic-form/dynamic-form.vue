@@ -2,7 +2,7 @@
 
   <v-form ref="form" class="dynamic-from">
 
-    <h5>{{ config.formName }}</h5>
+    <h5>{{ formName }}</h5>
 
     <div v-for="(column, key) in formConfig.columns">
 
@@ -68,7 +68,7 @@
       <v-btn @click="close" v-if="formConfig.showCancelButton"> {{ formConfig.cancelButtonName }}</v-btn>
 
       <v-btn class="brand-btn" @click="submit" color="primary">
-        {{ formConfig.confirmButtonName }}
+        {{ buttonName }}
       </v-btn>
     </div>
   </v-form>
@@ -79,12 +79,12 @@
 
   export default {
     data: () => ({
-      formValues: {
-
-      },
+      formValues: {},
       formConfig: {},
       validationMessages: [],
       menu: null,
+      formName: '',
+      buttonName: '',
     }),
     props: {
       config: {},
@@ -101,9 +101,9 @@
             this.onSubmit(this.formValues).then(response => {
               this.$emit('form-submitted', {clientValues: this.formValues, serverValues: response})
             })
-            .catch(function (error) {
-              console.log(error);
-            });
+              .catch(function (error) {
+                console.log(error);
+              });
           } else {
             console.log("Form invalid");
           }
@@ -115,11 +115,14 @@
     created() {
 
       this.formConfig = _.clone(this.config);
-      this.formConfig.confirmButtonName = this.config.confirmButtonName || 'Save';
-      this.formConfig.cancelButtonName = this.config.cancelButtonName || 'Cancel';
 
-      if (this.values) {
+      if (this.values && this.values.id) {
         this.formValues = _.clone(this.values);
+        this.formName = this.config.editName;
+        this.buttonName = this.config.editButtonName;
+      } else {
+        this.formName = this.config.createName;
+        this.buttonName = this.config.createButtonName;
       }
 
     }
