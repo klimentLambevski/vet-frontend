@@ -4,7 +4,18 @@ import * as _ from "lodash";
 export const getPatientTypes = () => graphql`
   query getAllPatientTypes {
     patientTypes {
+      id
       name
+      immunizations(order: "reverse:createdAt") {
+        createdAt
+        description
+        id
+        name
+        periods {
+          id
+          month
+        }
+      }
     }
   }
 `();
