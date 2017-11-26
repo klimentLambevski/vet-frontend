@@ -48,7 +48,7 @@
                 <v-icon>more_horiz</v-icon>
               </v-btn>
               <v-list>
-                <v-list-tile v-for="action, key in config.actions">
+                <v-list-tile v-for="action, key in config.actions"  :key="key">
                   <v-list-tile-title>
                     <a @click="openModal(props.item, key)">{{ action.label }}</a>
                   </v-list-tile-title>
