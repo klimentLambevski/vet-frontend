@@ -68,7 +68,7 @@
     }),
     computed: {
       ...mapState({
-        patientTypes: state => state.patientTypes.values
+        patientTypes: state => state.patientTypes.values.map(({name}) => ({name}))
       })
     },
     props: {
@@ -104,8 +104,6 @@
         this.showModal = false;
       },
       openModal({item, action}) {
-
-        console.log("item", item);
         if (item != null) {
           this.patient = item;
         }
@@ -123,7 +121,8 @@
             console.log("Invalid command");
         }
       },
-      onRowSelected() {
+      onRowSelected(item) {
+        this.$router.push({name: 'patient', params: {patientId: item.id}});
       },
       onCustomerSubmit(user) {
         return updateCustomer({user}, this.customer.id);

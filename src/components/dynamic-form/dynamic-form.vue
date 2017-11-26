@@ -37,7 +37,7 @@
       ></v-checkbox>
 
       <v-radio-group v-model="formValues[key]" v-if="column.type=='radio'">
-        <v-radio v-for="value in column.values" :key="value" :label="value.name" :value="value.value"></v-radio>
+        <v-radio v-for="value in column.values" :key="value.name" :label="value.name" :value="value.value"></v-radio>
       </v-radio-group>
 
       <date-picker
