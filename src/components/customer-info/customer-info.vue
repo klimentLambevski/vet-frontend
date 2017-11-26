@@ -1,5 +1,11 @@
 <template>
-  <div id="customer-info">
+  <div id="patients">
+
+    <div class="customer-info">{{ customer.user.name }} {{ customer.user.surname }}
+      <v-btn fab dark small color="primary" @click="showCustomerModal=true">
+        <v-icon dark>edit</v-icon>
+      </v-btn>
+    </div>
 
     <grid :config="patientsGridConfig"
           :items="customer.patients"
@@ -20,11 +26,25 @@
       </v-card>
     </v-dialog>
 
+    <v-dialog v-if="showCustomerModal" v-model="showCustomerModal" max-width="500px">
+      <v-card>
+        <v-card-text>
+          <dynamic-form
+            :on-submit="onCustomerSubmit"
+            :config="customerFormConfig"
+            :values="customer.user"
+            @form-submitted="onCustomerFormSubmitted"
+          ></dynamic-form>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
+
 
   </div>
 </template>
 <script>
 
+  import {mapState} from 'vuex';
   import DynamicForm from '../dynamic-form/dynamic-form.vue';
   import Grid from '../grid/grid.vue';
   import {getCustomerFormConfig} from "../../services/ui/customer";
@@ -42,10 +62,15 @@
       customer: {user: {}},
       customerFormConfig: {},
       patientsGridConfig: {},
-      patientTypes: [],
       patient: null,
-      showModal: false
+      showModal: false,
+      showCustomerModal: false,
     }),
+    computed: {
+      ...mapState({
+        patientTypes: state => state.patientTypes.values
+      })
+    },
     props: {
       customerId: null
     },
@@ -56,11 +81,7 @@
         this.customer = response.customer;
         this.patientsGridConfig = getPatientGridConfig;
         this.patientsFormConfig = getPatientFormConfig;
-
-        getPatientTypes().then(response => {
-          this.patientTypes = response.patientTypes;
-          this.patientsFormConfig.columns.type.values = this.patientTypes;
-        });
+        this.patientsFormConfig.columns.type.values = this.patientTypes;
       });
     },
     methods: {
@@ -83,8 +104,10 @@
         this.showModal = false;
       },
       openModal({item, action}) {
+
+        console.log("item", item);
         if (item != null) {
-          this.customer = item;
+          this.patient = item;
         }
         switch (action) {
           case 'create':
@@ -101,14 +124,19 @@
         }
       },
       onRowSelected() {
-
+      },
+      onCustomerSubmit(user) {
+        return updateCustomer({user}, this.customer.id);
+      },
+      onCustomerFormSubmitted({serverValues: {customer}}) {
+        this.customer = customer;
+        this.showCustomerModal = false;
       }
-
     }
   }
 </script>
 
 <style lang="scss">
-
+  @import "patients";
 </style>
 

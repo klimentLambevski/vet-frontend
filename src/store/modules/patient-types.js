@@ -10,10 +10,10 @@ export default {
   },
   mutations: {
     setPatientTypes(state, patientTypes) {
-      state.patientTypes = patientTypes;
+      state.values = patientTypes;
     }
   },
   state: {
-    patientTypes: []
+    values: []
   }
 }
