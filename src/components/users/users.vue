@@ -63,6 +63,10 @@
       openModal({item, action}) {
         if (item != null) {
           this.customer = item;
+        } else {
+          this.customer = {
+            user: null
+          };
         }
         switch (action) {
           case 'create':

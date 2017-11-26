@@ -35,7 +35,7 @@
             },
             'password': {
               name: 'password',
-              type: 'text',
+              type: 'password',
               label: 'Password',
               rules: [
                 (v) => !!v || 'Лозинката е задолжителна',
