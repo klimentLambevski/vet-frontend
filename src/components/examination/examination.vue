@@ -51,6 +51,7 @@
   import Grid from '../grid/grid.vue';
   import DynamicForm from '../dynamic-form/dynamic-form.vue';
   import {getExaminationFormConfig, getExaminationGridConfig} from "../../services/ui/examination";
+  import {createExamination, updateExamination} from "../../services/examinations";
 
   export default {
     components: {
@@ -71,7 +72,8 @@
     },
     computed: {
       ...mapState({
-        patientTypes: state => state.patientTypes.values.map(({name}) => ({name}))
+        patientType: state => state.patientTypes.values
+          .find(val => val.name === this.patient.type)
       })
     },
     methods: {
@@ -83,10 +85,21 @@
         this.showPatientModal = false;
       },
       onExaminationSubmit(examination) {
-
+        if (examination.id) {
+          return updateExamination(examination, examination.id);
+        } else {
+          return createExamination(examination, this.patient.id);
+        }
       },
-      onExaminationFormSubmitted({serverValues:  {examination}}) {
-
+      onExaminationFormSubmitted({serverValues: {examination}}) {
+        if (this.examination) {
+          this.patient.examinations = this.patient.examinations.map(c => {
+            return (c.id === examination.id) ? examination : c;
+          });
+        } else {
+          this.patient.examinations.push(examination);
+        }
+        this.showModal = false;
       },
       onRowSelected() {
 
