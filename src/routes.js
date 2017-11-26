@@ -2,6 +2,7 @@ import VueRouter from 'vue-router';
 import Users from './components/users/users.vue';
 import GraphQl from './components/graphql/graphql.vue';
 import Patients from './components/patients/patients.vue';
+import PatientType from './components/patient-types/patient-types.vue';
 import Examination from './components/examination/examination.vue';
 
 const routes = [
@@ -14,6 +15,7 @@ const routes = [
     name: 'users',
     component: Users,
   },
+
   {
     path: '/customer/:customerId',
     name: 'customer',
@@ -25,6 +27,12 @@ const routes = [
     name: 'patient',
     component: Examination,
     props: true
+  },
+
+  {
+    path: '/patient-types',
+    name: 'patientTypes',
+    component: PatientType,
   },
   {
     path: '/graphql',

@@ -4,9 +4,9 @@
       <div class="title">Vet</div>
     </div>
     <div class="navigation">
-      <router-link to="/users">Корисници</router-link>
-      <router-link to="/pacients">Типови пациенти</router-link>
-      <router-link to="/notifications">Нотификации</router-link>
+      <router-link :to="{name : 'users'}">Корисници</router-link>
+      <router-link :to="{name : 'patientTypes'}">Типови пациенти</router-link>
+      <router-link :to="{name : 'notifications'}">Нотификации</router-link>
       <a @click="logOut">Одјава</a>
     </div>
   </div>
