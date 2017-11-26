@@ -38,11 +38,6 @@ export const getCustomer = (customerId) => graphql`
         race
         type {
           name
-          immunizations {
-            id
-            name
-            description
-          }
         }
         createdAt
         updatedAt

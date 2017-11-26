@@ -15,6 +15,7 @@
         required
       ></v-text-field>
 
+
       <v-select
         :label="column.label"
         :rules="column.rules"
@@ -22,9 +23,9 @@
         v-if="column.type=='dropdown'"
         :items="column.values"
         :item-text="'name'"
+        :item-value="'name'"
+
       >
-
-
       </v-select>
 
       <v-checkbox

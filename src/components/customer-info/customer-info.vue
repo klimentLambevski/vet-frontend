@@ -25,6 +25,7 @@
 </template>
 <script>
 
+  import {mapState} from 'vuex';
   import DynamicForm from '../dynamic-form/dynamic-form.vue';
   import Grid from '../grid/grid.vue';
   import {getCustomerFormConfig} from "../../services/ui/customer";
@@ -42,10 +43,14 @@
       customer: {user: {}},
       customerFormConfig: {},
       patientsGridConfig: {},
-      patientTypes: [],
       patient: null,
       showModal: false
     }),
+    computed: {
+      ...mapState({
+        patientTypes: state => state.patientTypes.values
+      })
+    },
     props: {
       customerId: null
     },
@@ -56,11 +61,7 @@
         this.customer = response.customer;
         this.patientsGridConfig = getPatientGridConfig;
         this.patientsFormConfig = getPatientFormConfig;
-
-        getPatientTypes().then(response => {
-          this.patientTypes = response.patientTypes;
-          this.patientsFormConfig.columns.type.values = this.patientTypes;
-        });
+        this.patientsFormConfig.columns.type.values = this.patientTypes;
       });
     },
     methods: {
@@ -83,8 +84,10 @@
         this.showModal = false;
       },
       openModal({item, action}) {
+
+        console.log("item", item);
         if (item != null) {
-          this.customer = item;
+          this.patient = item;
         }
         switch (action) {
           case 'create':

@@ -8,7 +8,6 @@ export const getPatientGridConfig = {
     {text: 'Раса', value: 'race'},
     {text: 'МБР', value: 'mbr'},
     {text: 'Пол', value: 'gender'},
-
   ],
   pagination: {
     sortBy: 'name'
