@@ -1,6 +1,4 @@
 import VueRouter from 'vue-router';
-import App from './components/app/app.vue';
-import Login from './components/login/login.vue';
 import Users from './components/users/users.vue';
 import GraphQl from './components/graphql/graphql.vue';
 import CustomerInfo from './components/customer-info/customer-info.vue';
@@ -8,8 +6,7 @@ import CustomerInfo from './components/customer-info/customer-info.vue';
 const routes = [
   {
     path: '/',
-    name: 'app',
-    component: App,
+    redirect: '/users'
   },
   {
     path: '/users',

@@ -60,13 +60,10 @@
         this.$store.dispatch('checkAuth')
           .then(() => {
             this.clearLoading();
-            this.$router.push({name: 'users'});
             this.$store.dispatch('getPatientTypes');
           })
           .catch(() => {
             this.$store.dispatch('signOut');
-            this.$router.push({name: 'login'});
-
             this.clearLoading();
           });
       } else {
