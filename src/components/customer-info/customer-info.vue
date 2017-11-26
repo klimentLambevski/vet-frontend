@@ -1,5 +1,11 @@
 <template>
-  <div id="customer-info">
+  <div id="patients">
+
+    <div class="customer-info">{{ customer.user.name }} {{ customer.user.surname }}
+      <v-btn fab dark small color="primary" @click="showCustomerModal=true">
+        <v-icon dark>edit</v-icon>
+      </v-btn>
+    </div>
 
     <grid :config="patientsGridConfig"
           :items="customer.patients"
@@ -15,6 +21,19 @@
             :config="patientsFormConfig"
             :values="patient"
             @form-submitted="onPatientFormSubmitted"
+          ></dynamic-form>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
+
+    <v-dialog v-if="showCustomerModal" v-model="showCustomerModal" max-width="500px">
+      <v-card>
+        <v-card-text>
+          <dynamic-form
+            :on-submit="onCustomerSubmit"
+            :config="customerFormConfig"
+            :values="customer.user"
+            @form-submitted="onCustomerFormSubmitted"
           ></dynamic-form>
         </v-card-text>
       </v-card>
@@ -44,7 +63,8 @@
       customerFormConfig: {},
       patientsGridConfig: {},
       patient: null,
-      showModal: false
+      showModal: false,
+      showCustomerModal: false,
     }),
     computed: {
       ...mapState({
@@ -104,14 +124,19 @@
         }
       },
       onRowSelected() {
-
+      },
+      onCustomerSubmit(user) {
+        return updateCustomer({user}, this.customer.id);
+      },
+      onCustomerFormSubmitted({serverValues: {customer}}) {
+        this.customer = customer;
+        this.showCustomerModal = false;
       }
-
     }
   }
 </script>
 
 <style lang="scss">
-
+  @import "patients";
 </style>
 

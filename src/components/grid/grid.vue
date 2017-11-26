@@ -5,8 +5,8 @@
 
       <div class="section-title">
         <span>{{ config.gridName }}</span>
-        <v-btn flat fab color="primary" class="create-btn" @click.stop="openModal(null, 'create')">
-          <v-icon>add_box</v-icon>
+        <v-btn fab dark small color="primary" @click.stop="openModal(null, 'create')">
+          <v-icon dark>add</v-icon>
         </v-btn>
       </div>
       <v-spacer></v-spacer>
