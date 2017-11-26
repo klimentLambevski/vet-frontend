@@ -30,6 +30,7 @@ export const getCustomerFormConfig = {
 };
 
 export const getCustomerGridConfig = {
+  gridName: 'Корисници',
   headers: [
     {text: 'Email', value: 'user.email'},
     {text: 'Name', value: 'user.name'},

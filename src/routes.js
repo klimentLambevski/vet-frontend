@@ -17,9 +17,10 @@ const routes = [
     component: Users,
   },
   {
-    path: '/customer/:id',
+    path: '/customer/:customerId',
     name: 'customer',
     component: CustomerInfo,
+    props: true
   },
   {
     path: '/graphql',

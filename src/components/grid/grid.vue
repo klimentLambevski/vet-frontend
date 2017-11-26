@@ -4,7 +4,7 @@
     <v-card-title>
 
       <div class="section-title">
-        <span>Корисници</span>
+        <span>{{ config.gridName }}</span>
         <v-btn flat fab color="primary" class="create-btn" @click.stop="openModal(null, 'create')">
           <v-icon>add_box</v-icon>
         </v-btn>
@@ -40,11 +40,11 @@
         </tr>
       </template>
       <template slot="items" slot-scope="props">
-        <tr @click="rowSelected($event, props.item)">
+        <tr @click="rowSelected( props.item)">
           <td v-for="header in config.headers"> {{ getItem(props.item, header.value) }}</td>
           <td @click="$event.stopPropagation();">
             <v-menu bottom left>
-              <v-btn icon slot="activator" >
+              <v-btn icon slot="activator">
                 <v-icon>more_horiz</v-icon>
               </v-btn>
               <v-list>
@@ -122,7 +122,7 @@
       openModal(item, action) {
         this.$emit('open-modal', {item, action});
       },
-      rowSelected(item){
+      rowSelected(item) {
         this.$emit('row-selected', item);
       }
     },

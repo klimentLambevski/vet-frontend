@@ -21,7 +21,11 @@
         v-model="formValues[key]"
         v-if="column.type=='dropdown'"
         :items="column.values"
-      ></v-select>
+        :item-text="'name'"
+      >
+
+
+      </v-select>
 
       <v-checkbox
         :label="column.label"
@@ -30,36 +34,15 @@
         v-if="column.type=='checkbox'"
       ></v-checkbox>
 
-      <v-menu
-        lazy
-        :close-on-content-click="false"
-        v-model="menu"
-        v-if="column.type=='date'"
-        transition="scale-transition"
-        offset-y
-        full-width
-        :nudge-right="40"
-        max-width="290px"
-        min-width="290px"
-      >
-        <v-text-field
-          slot="activator"
-          label="Picker in menu"
-          v-model="formValues[key]"
-          prepend-icon="event"
-          readonly
-        ></v-text-field>
-        <v-date-picker v-model="formValues[key]" no-title scrollable actions>
-          <template slot-scope="{ save, cancel }">
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn flat color="primary" @click="cancel">Cancel</v-btn>
-              <v-btn flat color="primary" @click="save">OK</v-btn>
-            </v-card-actions>
-          </template>
-        </v-date-picker>
-      </v-menu>
+      <v-radio-group v-model="formValues[key]" v-if="column.type=='radio'">
+        <v-radio v-for="value in column.values" :label="value.name" :value="value.value"></v-radio>
+      </v-radio-group>
 
+      <date-picker
+        v-if="column.type=='date'"
+        v-model="formValues[key]"
+        @input="onDateChange"
+      ></date-picker>
     </div>
 
     <p class="validation-message" v-for="message in validationMessages"> {{ message }} </p>
@@ -76,13 +59,16 @@
 
 <script>
   import * as _ from 'lodash';
+  import DatePicker from '../date-picker/date-picker.vue';
 
   export default {
+    components: {
+      DatePicker
+    },
     data: () => ({
       formValues: {},
       formConfig: {},
       validationMessages: [],
-      menu: null,
       formName: '',
       buttonName: '',
     }),
@@ -110,6 +96,9 @@
         } else {
           console.log("Submit method not defined");
         }
+      },
+      onDateChange(data){
+        console.log(data);
       }
     },
     created() {

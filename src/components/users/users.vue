@@ -78,8 +78,8 @@
             console.log("Invalid command");
         }
       },
-      onRowSelected(item){
-        this.$router.push({name: 'customer', params: { id: item.id }});
+      onRowSelected(item) {
+        this.$router.push({name: 'customer', params: {customerId: item.id}});
       }
     },
     created() {
