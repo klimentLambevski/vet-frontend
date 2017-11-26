@@ -7,6 +7,7 @@ export const getCustomerFormConfig = {
     'name': {
       type: 'text',
       label: 'Име',
+      required: true,
       rules: [
         (v) => !!v || 'Името е задолжително',
       ]
@@ -14,6 +15,7 @@ export const getCustomerFormConfig = {
     'surname': {
       type: 'text',
       label: 'Презиме',
+      required: true,
       rules: [
         (v) => !!v || 'Презимето е задолжително',
       ]

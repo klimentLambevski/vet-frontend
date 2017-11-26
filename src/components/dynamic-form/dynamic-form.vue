@@ -11,9 +11,9 @@
         :rules="column.rules"
         :type="column.type"
         :multi-line="column.type== 'textarea'"
+        :required="column.required"
         v-if="column.type=='text' || column.type =='number' || column.type =='password' || column.type== 'textarea'"
         v-model="formValues[key]"
-        required
       ></v-text-field>
 
 
@@ -25,7 +25,6 @@
         :items="column.values"
         :item-text="'name'"
         :item-value="'name'"
-
       >
       </v-select>
 

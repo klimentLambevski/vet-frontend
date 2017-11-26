@@ -3,7 +3,7 @@ export const getPatientGridConfig = {
   headers: [
     {text: 'Име', value: 'name'},
     {text: 'Тип на животно', value: 'type.name'},
-    {text: 'Дата на раѓање', value: 'birthDate'},
+    {text: 'Дата на раѓање', value: 'birthDate', type: 'date'},
     {text: 'Микрочип', value: 'microchip'},
     {text: 'Раса', value: 'race'},
     {text: 'МБР', value: 'mbr'},
@@ -30,6 +30,7 @@ export const getPatientFormConfig = {
     'name': {
       type: 'text',
       label: 'Име',
+      required: true,
       rules: [
         (v) => !!v || 'Името е задолжително',
       ]
@@ -37,10 +38,12 @@ export const getPatientFormConfig = {
     'type' : {
       type: 'dropdown',
       label: 'Tip pacient',
+      required: true,
       values: {}
     },
     'birthDate': {
       type: 'date',
+      required: true,
       label: 'Дата на раѓање',
     },
     'microchip': {
@@ -58,6 +61,7 @@ export const getPatientFormConfig = {
     'gender': {
       type: 'radio',
       label: 'Пол',
+      required: true,
       values: [
         {
           name: 'Машко',
