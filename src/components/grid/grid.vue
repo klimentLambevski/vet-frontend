@@ -41,7 +41,7 @@
       </template>
       <template slot="items" slot-scope="props">
         <tr @click="rowSelected( props.item)">
-          <td v-for="header in config.headers"> {{ getItem(props.item, header.value) }}</td>
+          <td v-for="header in config.headers"> {{ getItem(props.item, header.value, header.type) }}</td>
           <td @click="$event.stopPropagation();">
             <v-menu bottom left>
               <v-btn icon slot="activator">
@@ -66,6 +66,20 @@
 
 <script>
 
+  function formatDate(date) {
+    let monthNames = [
+      "January", "February", "March",
+      "April", "May", "June", "July",
+      "August", "September", "October",
+      "November", "December"
+    ];
+
+    let day = date.getDate();
+    let monthIndex = date.getMonth();
+    let year = date.getFullYear();
+
+    return day + ' ' + monthNames[monthIndex] + ' ' + year;
+  }
 
   import * as _ from "lodash";
 
@@ -116,8 +130,14 @@
           this.pagination.descending = false
         }
       },
-      getItem(item, headerValue) {
-        return _.get(item, headerValue);
+      getItem(item, headerValue, type) {
+        if(type === 'date') {
+          let d = _.get(item, headerValue);
+          return formatDate(new Date(d));
+
+        } else {
+          return _.get(item, headerValue);
+        }
       },
       openModal(item, action) {
         this.$emit('open-modal', {item, action});

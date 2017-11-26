@@ -29,6 +29,7 @@ export const getExaminationFormConfig = {
     'measuredTemperature': {
       type: 'number',
       label: 'Измерена температура',
+      required: true,
       rules: [
         (v) => !!v || 'Измерена температура е задолжителнa',
       ]
@@ -36,6 +37,7 @@ export const getExaminationFormConfig = {
     'outerExamination': {
       type: 'textarea',
       label: 'Надворешен преглед',
+      required: true,
       rules: [
         (v) => !!v || 'Надворешен прегледа е задолжителен',
       ]
@@ -43,6 +45,7 @@ export const getExaminationFormConfig = {
     'diagnose': {
       type: 'textarea',
       label: 'Дијагноза',
+      required: true,
       rules: [
         (v) => !!v || 'Дијагнозата е задолжителна',
       ]
