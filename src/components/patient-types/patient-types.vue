@@ -72,8 +72,8 @@
             console.log("Invalid command");
         }
       },
-      onRowSelected() {
-
+      onRowSelected(item) {
+        this.$router.push({name: 'immunizations', params: {patientTypeId: item.id}});
       },
       onPatientTypeSubmit(patientType) {
         if (patientType.id) {
@@ -83,7 +83,6 @@
         }
       },
       onPatientTypeFormSubmitted({serverValues: {patientType}}) {
-
         if (this.patientType.id) {
           store.commit('updatePatientType', patientType);
         } else {

@@ -72,7 +72,7 @@
     },
     computed: {
       ...mapState({
-        patientType: state => state.patientTypes.values
+        patientTypes: state => state.patientTypes.values
           .find(val => val.name === this.patient.type)
       })
     },
@@ -92,7 +92,7 @@
         }
       },
       onExaminationFormSubmitted({serverValues: {examination}}) {
-        if (this.examination) {
+        if (this.examination.id) {
           this.patient.examinations = this.patient.examinations.map(c => {
             return (c.id === examination.id) ? examination : c;
           });

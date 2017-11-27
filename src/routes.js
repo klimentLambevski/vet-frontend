@@ -4,6 +4,7 @@ import GraphQl from './components/graphql/graphql.vue';
 import Patients from './components/patients/patients.vue';
 import PatientType from './components/patient-types/patient-types.vue';
 import Examination from './components/examination/examination.vue';
+import Immunization from './components/immunizations/immunizations.vue';
 
 const routes = [
   {
@@ -35,11 +36,17 @@ const routes = [
     component: PatientType,
   },
   {
+    path: '/patient-type/:patientTypeId',
+    name: 'immunizations',
+    component: Immunization,
+    props: true
+  },
+  {
     path: '/graphql',
     component: GraphQl
   }
 
-]
+];
 
 
 export const router = new VueRouter({
