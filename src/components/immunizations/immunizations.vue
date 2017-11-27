@@ -26,6 +26,7 @@
 <script>
   import Grid from '../grid/grid.vue';
   import DynamicForm from '../dynamic-form/dynamic-form.vue';
+  import {getImmunizationFormConfig, getImmunizationGridConfig} from "../../services/ui/immunization";
 
   export default {
     components: {
@@ -87,6 +88,8 @@
         this.patientType = response.patientType;
       });
 
+      this.immunizationsGridConfig = getImmunizationGridConfig;
+      this.immunizationsFormConfig = getImmunizationFormConfig;
 
     }
 
