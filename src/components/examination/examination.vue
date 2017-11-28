@@ -73,7 +73,6 @@
     computed: {
       ...mapState({
         patientTypes: state => state.patientTypes.values
-          .find(val => val.name === this.patient.type)
       })
     },
     methods: {
@@ -99,14 +98,17 @@
         } else {
           this.patient.examinations.push(examination);
         }
+        this.examination = {};
         this.showModal = false;
       },
       onRowSelected() {
 
       },
       openModal({item, action}) {
-        if (item != null) {
+        if (item !== null) {
           this.examination = item;
+        } else {
+          this.examination = {};
         }
         switch (action) {
           case 'create':
@@ -126,12 +128,25 @@
     created() {
       getPatient(this.patientId).then(response => {
         this.patient = response.patient;
+        let patientType = this.patientTypes.find(pt => pt.name === this.patient.type.name );
+        this.examinationFormConfig.columns.immunizationId.values = patientType && patientType.immunizations;
       });
 
       this.examinationsGridConfig = getExaminationGridConfig;
       this.examinationFormConfig = getExaminationFormConfig;
       this.patientsFormConfig = getPatientFormConfig;
       this.patientsFormConfig.columns.type.values = this.patientTypes;
+
+
+    },
+    watch: {
+      patientTypes() {
+        this.patientsFormConfig.columns.type.values = this.patientTypes;
+        if(this.patient.id) {
+          let patientType = this.patientTypes.find(pt => pt.name === this.patient.type.name );
+          this.examinationFormConfig.columns.immunizationId.values = patientType && patientType.immunizations;
+        }
+      }
     }
   }
 

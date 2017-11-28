@@ -84,6 +84,13 @@
         this.patientsFormConfig.columns.type.values = this.patientTypes;
       });
     },
+    watch: {
+      patientTypes() {
+        if(this.patientsFormConfig) {
+          this.patientsFormConfig.columns.type.values = this.patientTypes;
+        }
+      }
+    },
     methods: {
       onPatientSubmit(patient) {
         if (patient.id) {
@@ -106,6 +113,8 @@
       openModal({item, action}) {
         if (item != null) {
           this.patient = item;
+        } else {
+          this.patient = {};
         }
         switch (action) {
           case 'create':

@@ -105,9 +105,12 @@
             let startsWith = false;
             let contains = false;
             _.each(this.config.headers, (header) => {
-              let val = _.get(item, header.value);
-              startsWith = val && val.startsWith(this.search);
-              contains = val && val.includes(this.search);
+              try {
+                let val = _.get(item, header.value);
+                startsWith = val && val.startsWith(this.search);
+                contains = val && val.includes(this.search);
+
+              } catch (ex) {}
             });
             if (startsWith) {
               startWithArr.push(item);

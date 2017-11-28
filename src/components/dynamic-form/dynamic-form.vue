@@ -24,7 +24,7 @@
         v-if="column.type=='dropdown'"
         :items="column.values"
         :item-text="'name'"
-        :item-value="'name'"
+        :item-value="column.value || 'name'"
       >
       </v-select>
 

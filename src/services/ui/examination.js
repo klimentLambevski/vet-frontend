@@ -7,7 +7,7 @@ export const getExaminationGridConfig = {
     {text: 'Дијагноза', value: 'diagnose'},
     {text: 'Терапија', value: 'therapy'},
     {text: 'Операција', value: 'surgery'},
-    {text: 'Дата', value: 'createdAt'},
+    {text: 'Дата', value: 'createdAt', type: 'date'},
     {text: 'Забелешки', value: 'notes'},
   ],
   pagination: {
@@ -65,9 +65,11 @@ export const getExaminationFormConfig = {
       type: 'text',
       label: 'Лабораторија',
     },
-    'immunization': {
-      type: 'text',
+    'immunizationId': {
+      type: 'dropdown',
       label: 'Имунизација',
+      value: 'id',
+      values: {}
     },
     'notes': {
       type: 'text',

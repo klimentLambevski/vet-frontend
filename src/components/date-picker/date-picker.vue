@@ -46,8 +46,8 @@
       value: null
     },
     created(){
-      this.pickerValue = new Date(this.value);
-      this.pickerDisplayVal = formatDate(new Date(this.value));
+      this.pickerValue = _.clone(this.value);
+      this.pickerDisplayVal = this.value && formatDate(new Date(this.value));
     },
     methods: {
       onDateChange(){
@@ -56,7 +56,7 @@
     },
     watch: {
       pickerValue() {
-        this.pickerDisplayVal = formatDate(new Date(this.pickerValue));
+        this.pickerDisplayVal = this.pickerValue && formatDate(new Date(this.pickerValue));
       }
     }
   }
