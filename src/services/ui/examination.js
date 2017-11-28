@@ -56,6 +56,7 @@ export const getExaminationFormConfig = {
     'therapy': {
       type: 'textarea',
       label: 'Терапија',
+      required: true,
       rules: [
         (v) => !!v || 'Терапијата е задолжителна',
       ]
