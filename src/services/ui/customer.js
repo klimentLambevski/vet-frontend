@@ -22,6 +22,10 @@ export const getCustomerFormConfig = {
         (v) => !!v || 'Презимето е задолжително',
       ]
     },
+    'phone': {
+      type: 'text',
+      label: 'Телефон'
+    },
     'email': {
       type: 'text',
       label: 'Е-маил',
@@ -44,9 +48,10 @@ export const getCustomerFormConfig = {
 export const getCustomerGridConfig = {
   gridName: 'Корисници',
   headers: [
-    {text: 'Email', value: 'user.email'},
-    {text: 'Name', value: 'user.name'},
-    {text: 'Surname', value: 'user.surname'},
+    {text: 'Име', value: 'user.name'},
+    {text: 'Презиме', value: 'user.surname'},
+    {text: 'Телефон', value: 'user.phone'},
+    {text: 'Email', value: 'user.email'}
   ],
   pagination: {
     sortBy: 'name'

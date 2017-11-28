@@ -11,6 +11,7 @@ export const getCustomers = () => graphql`
         email
         name
         surname
+        phone
         referral
       }
     }
@@ -25,6 +26,7 @@ export const getCustomer = (customerId) => graphql`
         email
         name
         surname
+        phone
         referral
 
       }
@@ -58,6 +60,7 @@ export const createCustomer = (customer) => handleMutation(graphql`
           email
           name
           surname
+          phone
         }
       }
     }
@@ -77,6 +80,7 @@ export const updateCustomer = (customer, customerId) => handleMutation(graphql`
           email
           name
           surname
+          phone
         }
       }
     }
