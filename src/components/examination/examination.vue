@@ -14,7 +14,7 @@
           @row-selected="onRowSelected"
     ></grid>
 
-    <v-dialog v-if="showPatientModal" v-model="showPatientModal" max-width="500px">
+    <v-dialog v-if="showPatientModal" v-model="showPatientModal" :persistent="true" max-width="500px">
       <v-card>
         <v-card-text>
           <dynamic-form
@@ -22,12 +22,13 @@
             :config="patientsFormConfig"
             :values="patient"
             @form-submitted="onPatientFormSubmitted"
+            @cancel="showPatientModal = false"
           ></dynamic-form>
         </v-card-text>
       </v-card>
     </v-dialog>
 
-    <v-dialog v-if="showModal" v-model="showModal" max-width="500px">
+    <v-dialog v-if="showModal" v-model="showModal" :persistent="true" max-width="500px">
       <v-card>
         <v-card-text>
           <dynamic-form
@@ -35,6 +36,7 @@
             :config="examinationFormConfig"
             :values="examination"
             @form-submitted="onExaminationFormSubmitted"
+            @cancel="showModal = false"
           ></dynamic-form>
         </v-card-text>
       </v-card>

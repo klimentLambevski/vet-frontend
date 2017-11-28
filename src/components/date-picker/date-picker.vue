@@ -13,10 +13,12 @@
   >
     <v-text-field
       slot="activator"
-      label="Picker in menu"
+      :label="label"
       v-model="pickerDisplayVal"
       prepend-icon="event"
       readonly
+      :required="required"
+      :rules="rules"
     ></v-text-field>
 
     <v-date-picker v-model="pickerValue" no-title scrollable actions @input="onDateChange">
@@ -43,7 +45,10 @@
       pickerDisplayVal: null
     }),
     props: {
-      value: null
+      value: null,
+      required: {},
+      rules: {},
+      label: {}
     },
     created(){
       this.pickerValue = _.clone(this.value);

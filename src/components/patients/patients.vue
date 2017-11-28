@@ -13,7 +13,7 @@
           @row-selected="onRowSelected"
     ></grid>
 
-    <v-dialog v-if="showModal" v-model="showModal" max-width="500px">
+    <v-dialog :persistent="true" v-if="showModal" v-model="showModal"  max-width="500px">
       <v-card>
         <v-card-text>
           <dynamic-form
@@ -21,12 +21,13 @@
             :config="patientsFormConfig"
             :values="patient"
             @form-submitted="onPatientFormSubmitted"
+            @cancel="showModal = false"
           ></dynamic-form>
         </v-card-text>
       </v-card>
     </v-dialog>
 
-    <v-dialog v-if="showCustomerModal" v-model="showCustomerModal" max-width="500px">
+    <v-dialog :persistent="true" v-if="showCustomerModal" v-model="showCustomerModal"  max-width="500px">
       <v-card>
         <v-card-text>
           <dynamic-form
@@ -34,6 +35,7 @@
             :config="customerFormConfig"
             :values="customer.user"
             @form-submitted="onCustomerFormSubmitted"
+            @cancel="showCustomerModal = false"
           ></dynamic-form>
         </v-card-text>
       </v-card>
@@ -100,7 +102,7 @@
         }
       },
       onPatientFormSubmitted({serverValues: {patient}}) {
-        if (this.patient) {
+        if (this.patient.id) {
           this.customer.patients = this.customer.patients.map(c => {
             return (c.id === patient.id) ? patient : c;
           });

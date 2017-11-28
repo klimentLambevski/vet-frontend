@@ -23,6 +23,9 @@
       v-model="selected"
       select-all
       item-key="name"
+      no-data-text="Нема пронајдени податоци"
+      rows-per-page-text="Прикажани редови"
+      :rows-per-page-items="[5, 15, 25, { text: 'Сите', value: -1 }]"
       class="elevation-1"
       :headers="config.headers"
       :items="gridData"
@@ -107,11 +110,15 @@
             _.each(this.config.headers, (header) => {
               try {
                 let val = _.get(item, header.value);
-                startsWith = val && val.startsWith(this.search);
-                contains = val && val.includes(this.search);
-
+                if(!startsWith) {
+                  startsWith = val && val.toLowerCase().startsWith(this.search.toLowerCase());
+                }
+                if(!contains) {
+                  contains = val && val.toLowerCase().includes(this.search.toLowerCase());
+                }
               } catch (ex) {}
             });
+
             if (startsWith) {
               startWithArr.push(item);
             } else if (contains) {

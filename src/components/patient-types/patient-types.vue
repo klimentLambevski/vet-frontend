@@ -7,7 +7,7 @@
           @row-selected="onRowSelected"
     ></grid>
 
-    <v-dialog v-if="showModal" v-model="showModal" max-width="500px">
+    <v-dialog v-if="showModal" v-model="showModal" :persistent="true" max-width="500px">
       <v-card>
         <v-card-text>
           <dynamic-form
@@ -15,6 +15,7 @@
             :config="patientTypesFormConfig"
             :values="patientType"
             @form-submitted="onPatientTypeFormSubmitted"
+            @cancel="showModal = false"
           ></dynamic-form>
         </v-card-text>
       </v-card>
@@ -54,8 +55,9 @@
     methods: {
       openModal({item, action}) {
         if (item != null) {
-          console.log("yeye");
           this.patientType = item;
+        } else {
+          this.patientType = {};
         }
         switch (action) {
           case 'create':

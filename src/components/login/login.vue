@@ -23,6 +23,7 @@
       },
       data: () => ({
         loginFormConfig: {
+          createButtonName: 'Логирај се',
           columns: {
             'email': {
               name: 'email',
@@ -41,8 +42,7 @@
                 (v) => !!v || 'Лозинката е задолжителна',
               ]
             },
-          },
-          confirmButtonName: "Логирај се",
+          }
         },
         loginData: {}
       }),

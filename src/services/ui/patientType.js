@@ -1,7 +1,7 @@
 export const getPatientTypeGridConfig = {
   gridName: 'Типови пациенти',
   headers: [
-    {text: 'Име', value: 'name'},
+    {text: 'Вид', value: 'name'},
   ],
   pagination: {
     sortBy: 'name'
@@ -18,10 +18,12 @@ export const getPatientTypeFormConfig = {
   editName: 'Измени податоци за типот на пациент',
   createButtonName: 'Креирај',
   editButtonName: 'Измени',
+  showCancelButton: true,
+  cancelButtonName: 'Откажи',
   columns: {
     'name': {
       type: 'text',
-      label: 'Име',
+      label: 'Вид',
       required: true,
       rules: [
         (v) => !!v || 'Името е задолжително',

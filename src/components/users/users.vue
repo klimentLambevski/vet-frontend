@@ -7,7 +7,7 @@
           @row-selected="onRowSelected"
     ></grid>
 
-    <v-dialog v-if="showModal" v-model="showModal" max-width="500px">
+    <v-dialog v-if="showModal" v-model="showModal" :persistent="true" max-width="500px">
       <v-card>
         <v-card-text>
           <dynamic-form
@@ -15,6 +15,7 @@
             :config="customerFormConfig"
             :values="customer.user"
             @form-submitted="onFormSubmitted"
+            @cancel="showModal = false"
           ></dynamic-form>
         </v-card-text>
       </v-card>

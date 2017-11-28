@@ -7,6 +7,7 @@ export const getExaminationGridConfig = {
     {text: 'Дијагноза', value: 'diagnose'},
     {text: 'Терапија', value: 'therapy'},
     {text: 'Операција', value: 'surgery'},
+    {text: 'Имунизација', value: 'immunization.name'},
     {text: 'Дата', value: 'createdAt', type: 'date'},
     {text: 'Забелешки', value: 'notes'},
   ],
@@ -25,6 +26,8 @@ export const getExaminationFormConfig = {
   editName: 'Измени податоци за прегледот',
   createButtonName: 'Креирај',
   editButtonName: 'Измени',
+  showCancelButton: true,
+  cancelButtonName: 'Откажи',
   columns: {
     'measuredTemperature': {
       type: 'number',

@@ -26,6 +26,8 @@ export const getPatientFormConfig = {
   editName: 'Измени податоци за пациентот',
   createButtonName: 'Креирај',
   editButtonName: 'Измени',
+  showCancelButton: true,
+  cancelButtonName: 'Откажи',
   columns: {
     'name': {
       type: 'text',
@@ -35,15 +37,21 @@ export const getPatientFormConfig = {
         (v) => !!v || 'Името е задолжително',
       ]
     },
-    'type' : {
+    'type': {
       type: 'dropdown',
-      label: 'Tip pacient',
+      label: 'Тип пациент',
       required: true,
+      rules: [
+        (v) => !!v || 'Типот на пациент е задолжителен',
+      ],
       values: {}
     },
     'birthDate': {
       type: 'date',
       required: true,
+      rules: [
+        (v) => !!v || 'Датумот е задолжителен',
+      ],
       label: 'Дата на раѓање',
     },
     'microchip': {
@@ -56,12 +64,15 @@ export const getPatientFormConfig = {
     },
     'mbr': {
       type: 'text',
-      label: 'МБР',
+      label: 'ЕМБГ/ Пасош',
     },
     'gender': {
       type: 'radio',
       label: 'Пол',
       required: true,
+      rules: [
+        (v) => !!v || 'Полот е задолжителен',
+      ],
       values: [
         {
           name: 'Машко',

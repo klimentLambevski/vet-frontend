@@ -24,7 +24,7 @@
         v-if="column.type=='dropdown'"
         :items="column.values"
         :item-text="'name'"
-        :item-value="column.value || 'name'"
+        :item-value="column.value"
       >
       </v-select>
 
@@ -35,13 +35,16 @@
         v-if="column.type=='checkbox'"
       ></v-checkbox>
 
-      <v-radio-group v-model="formValues[key]" v-if="column.type=='radio'">
+      <v-radio-group v-model="formValues[key]" v-if="column.type=='radio'" :rules="column.rules">
         <v-radio v-for="value in column.values" :key="value.name" :label="value.name" :value="value.value"></v-radio>
       </v-radio-group>
 
       <date-picker
         v-if="column.type=='date'"
         v-model="formValues[key]"
+        :label="column.label"
+        :required="column.required"
+        :rules="column.rules"
         @input="onDateChange"
       ></date-picker>
 

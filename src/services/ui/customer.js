@@ -3,6 +3,8 @@ export const getCustomerFormConfig = {
   editName: 'Измени податоци за корисникот',
   createButtonName: 'Креирај',
   editButtonName: 'Измени',
+  showCancelButton: true,
+  cancelButtonName: 'Откажи',
   columns: {
     'name': {
       type: 'text',
@@ -24,8 +26,16 @@ export const getCustomerFormConfig = {
       type: 'text',
       label: 'Е-маил',
       rules: [
-        (v) => !!v || 'Е-маилот е задолжителен',
-        (v) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'Е-маилот мора да е валиден'
+        (v) => {
+          if(!v) {
+            return true;
+          }
+          if(!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v)) {
+            return  'Е-маилот мора да е валиден'
+          } else {
+            return true;
+          }
+        }
       ]
     },
   },
