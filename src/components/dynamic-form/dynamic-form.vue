@@ -44,6 +44,18 @@
         v-model="formValues[key]"
         @input="onDateChange"
       ></date-picker>
+
+      <input-array
+        v-if="column.type=='array'"
+        v-model="formValues[key]"
+        :field-key="column.key"
+        :label="column.label"
+        :field-label="column.fieldLabel"
+        :rules="column.rules"
+        :type="column.fieldType"
+        :required="column.required"
+      >
+      </input-array>
     </div>
 
     <p class="validation-message" v-for="message in validationMessages"> {{ message }} </p>
@@ -72,10 +84,12 @@
 <script>
   import * as _ from 'lodash';
   import DatePicker from '../date-picker/date-picker.vue';
+  import InputArray from '../forms/input-array/input-array.vue';
 
   export default {
     components: {
-      DatePicker
+      DatePicker,
+      InputArray
     },
     data: () => ({
       formValues: {},
@@ -127,6 +141,16 @@
 
       if (this.values && this.values.id) {
         this.formValues = _.clone(this.values);
+
+        _.each(this.formConfig.columns, (column, key) => {
+          if(column.type === 'date') {
+            this.formValues[key] = new Date(this.formValues[key])
+          }
+        });
+
+
+
+
         this.formName = this.config.editName;
         this.buttonName = this.config.editButtonName;
       } else {

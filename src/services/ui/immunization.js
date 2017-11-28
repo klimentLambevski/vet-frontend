@@ -1,7 +1,9 @@
 export const getImmunizationGridConfig = {
   gridName: 'Имунизацијаа',
   headers: [
-    {text: 'Измерена температура', value: 'measuredTemperature'},
+    {text: 'Име', value: 'name'},
+    {text: 'Опис', value: 'description'},
+    // {text: 'Период на имунизација', value: 'periods'},
   ],
   pagination: {
     sortBy: 'name'
@@ -19,12 +21,31 @@ export const getImmunizationFormConfig = {
   createButtonName: 'Креирај',
   editButtonName: 'Измени',
   columns: {
-    'measuredTemperature': {
-      type: 'number',
-      label: 'Измерена температура',
+    'name': {
+      type: 'text',
+      label: 'Име',
       required: true,
       rules: [
-        (v) => !!v || 'Измерена температура е задолжителнa',
+        (v) => !!v || 'Името е задолжително',
+      ]
+    },
+    'description': {
+      type: 'textarea',
+      label: 'Опис',
+      required: true,
+      rules: [
+        (v) => !!v || 'Описот е задолжителен',
+      ]
+    },
+    'periods': {
+      type: 'array',
+      fieldType: 'number',
+      key: 'month',
+      label: 'Периоди на имунизација(месеци)',
+      fieldLabel: 'Месец',
+      required: true,
+      rules: [
+        (v) => !!v || 'Месецот е задолжителен',
       ]
     },
   }

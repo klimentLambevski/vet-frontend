@@ -1,0 +1,15 @@
+.input-array {
+  .array-field {
+    display: flex;
+    align-items: center;
+    .field-icon {
+      color: #000;
+      cursor: pointer;
+    }
+  }
+  .add-field {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

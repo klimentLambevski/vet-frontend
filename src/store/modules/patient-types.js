@@ -19,6 +19,22 @@ export default {
       state.values = state.values.map(c => {
         return (c.id === patientType.id) ? patientType : c;
       });
+    },
+    addImmunization(state, {patientType, immunization}) {
+      let pt = state.values.find(v => v.id === patientType.id);
+      pt.immunizations = [...pt.immunizations, immunization];
+    },
+    updateImmunization(state,  {patientType, immunization}) {
+      console.log(immunization);
+      let pt = state.values.find(v => v.id === patientType.id);
+      pt.immunizations = [...pt.immunizations.map((i) => {
+        if(i.id === immunization.id) {
+          return immunization;
+        } else {
+          return i;
+        }
+      })];
+      console.log(pt);
     }
 
   },

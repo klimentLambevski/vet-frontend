@@ -14,7 +14,7 @@
     <v-text-field
       slot="activator"
       label="Picker in menu"
-      v-model="pickerValue"
+      v-model="pickerDisplayVal"
       prepend-icon="event"
       readonly
     ></v-text-field>
@@ -34,21 +34,29 @@
 
 <script>
   import * as _ from "lodash";
+  import {formatDate} from "../../services/utils/date";
 
   export default {
     data: () => ({
       menu: null,
-      pickerValue: null
+      pickerValue: null,
+      pickerDisplayVal: null
     }),
     props: {
       value: null
     },
     created(){
-      this.pickerValue = _.clone(this.value);
+      this.pickerValue = new Date(this.value);
+      this.pickerDisplayVal = formatDate(new Date(this.value));
     },
     methods: {
       onDateChange(){
         this.$emit('input',  new Date(this.pickerValue).toISOString())
+      }
+    },
+    watch: {
+      pickerValue() {
+        this.pickerDisplayVal = formatDate(new Date(this.pickerValue));
       }
     }
   }

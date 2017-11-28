@@ -29,6 +29,7 @@
   import {globalState} from "../../store/global";
   import Loading from '../loading/loading.vue';
   import {getCustomer, getCustomers} from "../../services/customer";
+  import {EventBus} from "../../services/event-bus";
 
   export default {
     store,
@@ -60,7 +61,6 @@
         this.$store.dispatch('checkAuth')
           .then(() => {
             this.clearLoading();
-            this.$store.dispatch('getPatientTypes');
           })
           .catch(() => {
             this.$store.dispatch('signOut');
@@ -69,6 +69,10 @@
       } else {
         this.clearLoading();
       }
+
+      EventBus.$on('Authorized', () => {
+        this.$store.dispatch('getPatientTypes');
+      })
     }
 
   }

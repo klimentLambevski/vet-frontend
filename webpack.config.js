@@ -79,7 +79,7 @@ module.exports = {
             }
         }
     },
-    devtool: 'inline-source-map',
+    devtool: 'cheap-source-map',
 
     plugins: [
         extractSass,

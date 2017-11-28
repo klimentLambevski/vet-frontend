@@ -2,7 +2,7 @@
   <div id="immunizations">
 
     <grid :config="immunizationsGridConfig"
-          :items="patientType.immunizations"
+          :items="immunizations"
           @open-modal="openModal"
           @row-selected="onRowSelected"
     ></grid>
@@ -24,9 +24,12 @@
 </template>
 
 <script>
+  import {mapState} from 'vuex';
   import Grid from '../grid/grid.vue';
   import DynamicForm from '../dynamic-form/dynamic-form.vue';
   import {getImmunizationFormConfig, getImmunizationGridConfig} from "../../services/ui/immunization";
+  import {getPatientTypes} from "../../services/patient-types";
+  import {createImmunization, updateImmunization} from "../../services/immunizations";
 
   export default {
     components: {
@@ -38,11 +41,26 @@
     },
     data: () => ({
       showModal: false,
-      patientType: {},
       immunization: {},
       immunizationsGridConfig: {},
       immunizationsFormConfig: {}
     }),
+    computed: {
+      ...mapState({
+        immunizations(state) {
+          let patientType = state.patientTypes.values.find(pt => pt.id === this.patientTypeId);
+          console.log(patientType);
+          if(patientType) {
+            return patientType.immunizations;
+          } else {
+            return [];
+          }
+        },
+        patientType(state) {
+          return state.patientTypes.values.find(pt => pt.id === this.patientTypeId);
+        }
+      })
+    },
     methods: {
       openModal({item, action}) {
         if (item != null) {
@@ -66,27 +84,24 @@
 
       },
       onImmunizationSubmit(immunization) {
+
         if (immunization.id) {
-          //   return updateImmunization(immunization, immunization.id);
+             return updateImmunization(immunization, immunization.id);
         } else {
-          //   return createImmunization(immunization, this.patientType.id);
+             return createImmunization(immunization, this.patientType.id);
         }
       },
       onImmunizationFormSubmitted({serverValues: {immunization}}) {
-        if (this.immunization) {
-          this.patientType.immunizations = this.patientType.immunizations.map(c => {
-            return (c.id === immunization.id) ? immunization : c;
-          });
+        if (this.immunization && this.immunization.id) {
+          this.$store.commit('updateImmunization', {patientType: this.patientType, immunization});
         } else {
-          this.patientType.immunizations.push(immunization);
+          this.$store.commit('addImmunization', {patientType: this.patientType, immunization});
         }
+        this.immunization = {};
         this.showModal = false;
       }
     },
     created() {
-      getPatientType(this.patientTypeId).then(response => {
-        this.patientType = response.patientType;
-      });
 
       this.immunizationsGridConfig = getImmunizationGridConfig;
       this.immunizationsFormConfig = getImmunizationFormConfig;
